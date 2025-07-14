@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Leaflet 생태 지도 - 동물과 식물 분류</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map { height: 600px; width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>아산시 탕정면 생태 지도 🌿🐾</h2>
+  <p style="color:#00FF00">식물 : 초록마커</p><p style="color:#ffbf00">동물 : 주황마커</p>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([36.8072, 127.0600], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 마커 아이콘 정의
+    const orangeIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+    });
+
+    const greenIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    // 시작 위치
+    L.marker([36.8072, 127.0600])
+      .addTo(map)
+      .bindPopup("<b>가락바위소유지</b><br>탐색 시작 지점입니다.");
+
+    // 동물 목록
+    const animals = [
+      { name: "노린재", lat: 36.808018, lng: 127.059693 },
+      { name: "매미 나방 유충", lat: 36.808513, lng: 127.059919 },
+      { name: "매미 나방 유충과 무당벌레", lat: 36.808654, lng: 127.060021 },
+      { name: "매미", lat: 36.808407, lng: 127.059944 },
+      { name: "미국흰불나방 유충", lat: 36.808561, lng: 127.059991 },
+      { name: "배추흰나비", lat: 36.808931, lng: 127.061267 },
+      { name: "비늘갈거미", lat: 36.807219, lng: 127.060868 },
+      { name: "사마귀", lat: 36.807140, lng: 127.060786 },
+      { name: "새", lat: 36.809308, lng: 127.060692 },
+      { name: "소금쟁이", lat: 36.806966, lng: 127.059125 },
+      { name: "실잠자리", lat: 36.807258, lng: 127.059308 },
+      { name: "애거미/스파이더링", lat: 36.807808, lng: 127.059652 },
+      { name: "잉어", lat: 36.809455, lng: 127.061020 },
+      { name: "잠자리", lat: 36.807116, lng: 127.060102 },
+      { name: "주홍날개꽃매미", lat: 36.807028, lng: 127.060761 },
+      { name: "파리매", lat: 36.805721, lng: 127.059840 }
+    ];
+
+    // 식물 목록
+    const plants = [
+      { name: "강아지풀", lat: 36.809035, lng: 127.061291 },
+      { name: "개망초", lat: 36.809117, lng: 127.061224 },
+      { name: "금매화", lat: 36.808746, lng: 127.061315 },
+      { name: "난초", lat: 36.808569, lng: 127.059981 },
+      { name: "메리골드", lat: 36.806237, lng: 127.060416 },
+      { name: "미국자리공", lat: 36.807296, lng: 127.059384 },
+      { name: "부들", lat: 36.806891, lng: 127.059080 },
+      { name: "소나무", lat: 36.809243, lng: 127.061315 },
+      { name: "쑥", lat: 36.809238, lng: 127.060998 },
+      { name: "엄나무/산딸나무", lat: 36.807635, lng: 127.061397 },
+      { name: "오동나무", lat: 36.807088, lng: 127.060618 },
+      { name: "원추리", lat: 36.809232, lng: 127.060992 },
+      { name: "이끼", lat: 36.806647, lng: 127.060656 },
+      { name: "철쭉", lat: 36.805433, lng: 127.060179 },
+      { name: "칡꽃", lat: 36.807566, lng: 127.061002 },
+      { name: "큰금계국", lat: 36.809242, lng: 127.060402 },
+      { name: "털부처꽃", lat: 36.807914, lng: 127.060511 },
+      { name: "황매화", lat: 36.808863, lng: 127.061249 },
+      { name: "흰말채", lat: 36.807352, lng: 127.060903 }
+    ];
+
+    // 동물 마커 추가
+    animals.forEach(a => {
+      L.marker([a.lat, a.lng], { icon: orangeIcon  })
+        .addTo(map)
+        .bindPopup(`<b>${a.name}</b>`);
+    });
+
+    // 식물 마커 추가
+    plants.forEach(p => {
+      L.marker([p.lat, p.lng], { icon: greenIcon })
+        .addTo(map)
+        .bindPopup(`<b>${p.name}</b>`);
+    });
+  </script>
+</body>
+</html>
