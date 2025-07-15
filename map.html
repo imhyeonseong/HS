@@ -28,10 +28,8 @@
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // 아이콘 (주황 = 동물, 초록 = 식물)
     const orangeIcon = new L.Icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
       shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
@@ -50,70 +48,553 @@
       shadowSize: [41, 41]
     });
 
-    // 동물 데이터
     const animals = [
-      { name: "노린재", lat: 36.808018, lng: 127.059693 },
-      { name: "매미 나방 유충", lat: 36.808513, lng: 127.059919 },
-      { name: "매미 나방 유충과 무당벌레", lat: 36.808654, lng: 127.060021 },
-      { name: "매미", lat: 36.808407, lng: 127.059944 },
-      { name: "미국흰불나방 유충", lat: 36.808561, lng: 127.059991 },
-      { name: "배추흰나비", lat: 36.808931, lng: 127.061267 },
-      { name: "비늘갈거미", lat: 36.807219, lng: 127.060868 },
-      { name: "사마귀", lat: 36.807140, lng: 127.060786 },
-      { name: "새", lat: 36.809308, lng: 127.060692 },
-      { name: "소금쟁이", lat: 36.806966, lng: 127.059125 },
-      { name: "실잠자리", lat: 36.807258, lng: 127.059308 },
-      { name: "애거미/스파이더링", lat: 36.807808, lng: 127.059652 },
-      { name: "잉어", lat: 36.809455, lng: 127.061020 },
-      { name: "잠자리", lat: 36.807116, lng: 127.060102 },
-      { name: "주홍날개꽃매미", lat: 36.807028, lng: 127.060761 },
-      { name: "파리매", lat: 36.805721, lng: 127.059840 }
-    ];
+      {
+        name: "노린재",
+        lat: 36.808018,
+        lng: 127.059693,
+        photo: "aimage/노린재.jpg",
+        description: `생물 분류
+종명(예시): Halyomorpha halys (갈색노린재)
+분류: 노린재과(Pentatomidae), 노린재목(Hemiptera)
 
-    // 식물 데이터
+생물 특징
+외형적 특징: 등딱지는 방패 모양, 갈색 바탕에 얼룩무늬 있음. 성충의 크기는 약 12~17mm.
+행동 특성: 식물의 즙을 빨아 먹으며, 특정 시기에는 집 안으로 대거 유입되기도 함.
+서식지 특성: 논, 밭, 정원, 나무줄기 주변 등
+생태적 역할: 일부 종은 농작물 해충, 일부는 천적에 의해 조절되며 먹이사슬 구성원으로 작용함.`
+      },
+      {
+        name: "매미 나방 유충",
+        lat: 36.808513,
+        lng: 127.059919,
+        photo: "aimage/매미 나방 유충.jpg",
+        description: `생물 분류
+종명: Lymantria dispar (매미나방)
+분류: 독나방과(Erebidae), 나비목(Lepidoptera)
+
+생물 특징
+외형적 특징: 유충은 털이 많고 몸에 파란색과 빨간색 점이 줄지어 있음.
+행동 특성: 왕성한 식욕을 가지고 집단으로 수목의 잎을 갉아먹음.
+서식지 특성: 다양한 활엽수림, 가로수, 공원 등 도시 녹지
+생태적 역할: 대량 발생 시 수목 피해를 유발하는 해충으로 간주됨. 천적과의 관계 속에서 생태계 균형을 유지하는 요소로 작용함.`
+      },
+      {
+        name: "무당벌레",
+        lat: 36.808654,
+        lng: 127.060021,
+        photo: "aimage/무당벌레.jpg",
+        description: `생물 분류
+종명(예시): Harmonia axyridis (무당벌레 대표종)
+분류: 무당벌레과(Coccinellidae), 딱정벌레목(Coleoptera)
+
+생물 특징
+외형적 특징: 빨간색 또는 주황색의 단단한 등딱지에 검은 점 무늬, 몸길이 약 5~8mm
+행동 특성: 진딧물 등 작은 해충을 포식, 알에서 유충, 번데기, 성충 순으로 성장
+서식지 특성: 정원, 밭, 숲 주변 식물체 위
+생태적 역할: 농업 생태계에서 해충의 천적, 생물학적 방제에 활용됨.`
+      },
+      {
+        name: "매미",
+        lat: 36.808407,
+        lng: 127.059944,
+        photo: "aimage/매미.jpg",
+        description: `생물 분류
+종명: Cryptotympana atrata
+분류: 매미과(Cicadidae), 노린재목(Hemiptera)
+
+생물 특징
+외형적 특징: 몸길이 약 30~35mm, 전체적으로 검고 광택 있음. 투명한 날개
+행동 특성: 여름철 특유의 울음소리를 냄(숲속에서 ‘맴맴’). 수컷이 울음으로 암컷을 유인.
+서식지 특성: 산림, 공원, 나무가 많은 지역
+생태적 역할: 뿌리에서 수액을 빨며 자라며, 짧은 생애 동안 번식을 함. 포식자의 먹이가 됨.`
+      },
+      {
+        name: "미국흰불나방 유충",
+        lat: 36.808561,
+        lng: 127.059991,
+        photo: "aimage/미국흰불나방 유충.jpg",
+        description: `생물 분류
+종명: Hyphantria cunea
+분류: 불나방과(Erebidae), 나비목(Lepidoptera)
+
+생물 특징
+외형적 특징: 유충은 흰 털로 덮여 있으며 검은 점이 흩어져 있음. 성충은 흰색 날개를 가짐.
+행동 특성: 집단으로 나뭇잎을 갉아 먹으며, 고치처럼 얽힌 거미줄 안에서 활동함.
+서식지 특성: 가로수, 유실수, 숲 주변 나무
+생태적 역할: 대발생 시 수목 잎을 탈엽시키며, 생태계 내에서는 포식자들의 먹이원이 됨.`
+      },
+      {
+        name: "배추흰나비",
+        lat: 36.808931,
+        lng: 127.061267,
+        photo: "aimage/배추흰나비.jpg",
+        description: `생물 분류
+종명: Pieris rapae
+분류: 흰나비과(Pieridae), 나비목(Lepidoptera)
+
+생물 특징
+외형적 특징: 날개는 흰색 바탕에 끝부분이 검고, 앞날개에 암컷은 검은 점 2개, 수컷은 1개 있음. 날개 펼친 길이 약 4~6cm.
+행동 특성: 날아다니며 십자화과(배추, 무 등)의 잎에 알을 낳음. 애벌레는 잎을 갉아먹음.
+서식지 특성: 밭, 정원, 공원 등 다양한 식생지
+생태적 역할: 꽃가루 매개자 역할, 그러나 유충은 배추 등 작물 해충으로 간주됨`
+      },
+      {
+        name: "비늘갈거미",
+        lat: 36.807219,
+        lng: 127.060868,
+        photo: "aimage/비늘갈거미.jpg",
+        description: `생물 분류
+종명(추정): Cyclosa ginnaga
+분류: 왕거미과(Araneidae), 거미목(Araneae)
+
+생물 특징
+외형적 특징: 은백색 비늘처럼 반짝이는 등판 무늬가 특징. 몸길이 약 8~12mm.
+행동 특성: 거미줄 중앙에 가만히 있다가 진동을 감지해 먹잇감을 포획함. 방사형 그물 제작.
+서식지 특성: 숲 가장자리, 덤불, 정원 등 식물 밀집 지역
+생태적 역할: 곤충을 잡아먹는 포식자. 곤충 개체 수 조절에 기여.`
+      },
+      {
+        name: "사마귀",
+        lat: 36.807140,
+        lng: 127.060786,
+        photo: "aimage/사마귀.jpg",
+        description: `생물 분류
+종명: Tenodera sinensis (대사마귀)
+분류: 사마귀과(Mantidae), 사마귀목(Mantodea)
+
+생물 특징
+외형적 특징: 몸길이 약 6~10cm, 앞다리가 낫처럼 휘어져 있고 먹이를 붙잡는 데 사용. 녹색 또는 갈색.
+행동 특성: 위장과 매복 사냥에 특화되어 있음. 곤충 등 다양한 작은 동물을 포식.
+서식지 특성: 논두렁, 숲 가장자리, 풀밭 등
+생태적 역할: 상위 소비자로서 해충 조절 기능, 먹이사슬 내 중간 포식자`
+      },
+      {
+        name: "산비둘기",
+        lat: 36.809308,
+        lng: 127.060692,
+        photo: "aimage/산비둘기.jpg",
+        description: `생물 분류
+종명: Columba janthina
+분류: 비둘기과(Columbidae), 비둘기목(Columbiformes)
+
+생물 특징
+외형적 특징: 전체적으로 청회색 깃털, 햇빛에 따라 보랏빛 광택이 남. 몸길이 약 35cm.
+행동 특성: 나무 위에 둥지를 틀고 주로 열매나 식물의 씨앗을 먹음. 날개 소리가 크며 민감한 성격.
+서식지 특성: 산림, 능선, 섬의 숲 등 비교적 고요한 자연 지역
+생태적 역할: 식물 씨앗 확산에 기여하는 중형 조류`
+      },
+      {
+        name: "소금쟁이",
+        lat: 36.806966,
+        lng: 127.059125,
+        photo: "aimage/소금쟁이.jpg",
+        description: `생물 분류
+종명: Gerris paludum
+분류: 소금쟁이과(Gerridae), 노린재목(Hemiptera)
+
+생물 특징
+외형적 특징: 몸길이 약 1~2cm. 길쭉하고 가느다란 몸에 다리가 길어 수면 위를 걷는 듯 이동.
+행동 특성: 물 표면 장력을 이용해 빠르게 이동. 수면 위에서 곤충 사체나 작은 수서생물을 먹음.
+서식지 특성: 연못, 하천, 논 등 고여 있거나 느리게 흐르는 물가
+생태적 역할: 수서 곤충의 포식자, 수생 생태계의 먹이사슬 구성원`
+      },
+      {
+        name: "실잠자리",
+        lat: 36.807258,
+        lng: 127.059308,
+        photo: "aimage/실잠자리.jpg",
+        description: `생물 분류
+종명(예시): Ischnura senegalensis
+분류: 실잠자리과(Coenagrionidae), 잠자리목(Odonata)
+
+생물 특징
+외형적 특징: 몸길이 약 3~4cm로 매우 가늘고 길며, 몸은 푸른빛이 도는 녹색 또는 검은색. 날개는 투명함.
+행동 특성: 짝짓기 시 수컷과 암컷이 하트 모양의 ‘교미 바퀴’를 형성. 비행이 느리고 섬세함.
+서식지 특성: 논, 연못, 수초가 많은 정수 환경
+생태적 역할: 유충과 성충 모두 작은 곤충을 포식하며 수서 생물군 조절에 기여`
+      },
+      {
+        name: "애거미(스파이더링)",
+        lat: 36.807808,
+        lng: 127.059652,
+        photo: "aimage/애거미_스파이더링.jpg",
+        description: `생물 분류
+종명(예시): Nephila clavata (무늬왕거미)
+분류: 왕거미과(Araneidae), 거미목(Araneae)
+
+생물 특징
+외형적 특징: 몸길이 약 20~30mm, 다리가 길고 노란색과 검정 줄무늬가 있음. 몸통은 노란 바탕에 검은 무늬.
+행동 특성: 커다란 방사형 거미줄을 만들고 중앙에 정지해 먹잇감을 기다림.
+서식지 특성: 숲 가장자리, 인가 근처 덤불이나 나무 사이
+생태적 역할: 곤충을 포식해 개체 수 조절, 생태계의 중간 포식자 역할`
+      },
+      {
+        name: "잉어",
+        lat: 36.809455,
+        lng: 127.061020,
+        photo: "aimage/잉어.jpg",
+        description: `생물 분류
+종명: Cyprinus carpio
+분류: 잉어과(Cyprinidae), 잉어목(Cypriniformes)
+
+생물 특징
+외형적 특징: 몸길이 약 30~80cm, 몸통은 두껍고 갈색황금빛 비늘, 입가에 2쌍의 수염이 있음.
+행동 특성: 바닥의 유기물이나 수서곤충을 먹으며 비교적 느린 움직임.
+서식지 특성: 하천, 저수지, 연못 등 고인 물이나 느린 유속의 물
+생태적 역할: 저서 생물 섭취로 물 속 생태계 순환에 기여, 일부 지역에서는 외래종으로 생태계 교란 가능성 있음`
+      },
+      {
+        name: "주홍날개 꽃매미",
+        lat: 36.807028,
+        lng: 127.060761,
+        photo: "aimage/주홍날개꽃매미.jpg",
+        description: `생물 분류
+종명: Lycorma delicatula
+분류: 꽃매미과(Fulgoridae), 노린재목(Hemiptera)
+
+생물 특징
+외형적 특징: 앞날개는 회갈색 바탕에 검은 점이 흩어져 있고, 뒷날개는 붉은색 바탕에 검정 띠 무늬. 몸길이 약 2.5cm.
+행동 특성: 나무줄기에 모여 즙을 빨아 먹고, 배설물로 그을음병을 유발함.
+서식지 특성: 포도나무, 감나무 등 다양한 수목 및 농작물
+생태적 역할: 외래종 해충으로 농작물 피해 유발. 천적 부재로 개체 수 조절 어려움`
+      },
+      {
+        name: "파리매",
+        lat: 36.805721,
+        lng: 127.059840,
+        photo: "aimage/파리매.jpg",
+        description: `생물 분류
+종명(예시): Promachus yesonicus
+분류: 파리매과(Asilidae), 파리목(Diptera)
+
+생물 특징
+외형적 특징: 몸길이 약 20~30mm, 전체적으로 털이 많고 뾰족한 입을 가지고 있음. 파리처럼 생겼지만 훨씬 크고 강인한 인상.
+행동 특성: 비행 중 곤충을 포획해 꿰뚫고 체액을 흡수. 매우 강한 포식성.
+서식지 특성: 초지, 들판, 논 주변, 햇볕이 잘 드는 개방된 공간`
+  }
+      ];
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const plants = [
-      { name: "강아지풀", lat: 36.809035, lng: 127.061291 },
-      { name: "개망초", lat: 36.809117, lng: 127.061224 },
-      { name: "금매화", lat: 36.808746, lng: 127.061315 },
-      { name: "난초", lat: 36.808569, lng: 127.059981 },
-      { name: "메리골드", lat: 36.806237, lng: 127.060416 },
-      { name: "미국자리공", lat: 36.807296, lng: 127.059384 },
-      { name: "부들", lat: 36.806891, lng: 127.059080 },
-      { name: "소나무", lat: 36.809243, lng: 127.061315 },
-      { name: "쑥", lat: 36.809238, lng: 127.060998 },
-      { name: "엄나무/산딸나무", lat: 36.807635, lng: 127.061397 },
-      { name: "오동나무", lat: 36.807088, lng: 127.060618 },
-      { name: "원추리", lat: 36.809232, lng: 127.060992 },
-      { name: "이끼", lat: 36.806647, lng: 127.060656 },
-      { name: "철쭉", lat: 36.805433, lng: 127.060179 },
-      { name: "칡꽃", lat: 36.807566, lng: 127.061002 },
-      { name: "큰금계국", lat: 36.809242, lng: 127.060402 },
-      { name: "털부처꽃", lat: 36.807914, lng: 127.060511 },
-      { name: "황매화", lat: 36.808863, lng: 127.061249 },
-      { name: "흰말채", lat: 36.807352, lng: 127.060903 }
+      {
+        name: "흰말채나무",
+        lat: 36.807352,
+        lng: 127.060903,
+        photo: "pimage/흰말채.jpg",
+        description: `생물 분류
+종명: Cornus alba
+분류: 층층나무과(Cornaceae), 말채나무속(Cornus)
+
+식물 특징
+외형적 특징: 키 2~3m의 낙엽 관목. 가지는 붉은색이며 잎은 달걀형. 봄에 흰 꽃, 가을엔 흰 열매가 열림.
+생육 특성: 강한 번식력과 내한성. 가지치기에도 강함.
+서식지 특성: 하천 주변, 습지, 공원 등
+생태적 역할: 토양 유실 방지, 조류의 먹이 제공. 도시 조경용으로 활용됨.
+학명: Cornus alba`
+      },
+      {
+        name: "황매화",
+        lat: 36.808863,
+        lng: 127.061249,
+        photo: "pimage/황매화.jpg",
+        description: `생물 분류
+종명: Kerria japonica
+분류: 장미과(Rosaceae), 황매화속(Kerria)
+
+식물 특징
+외형적 특징: 키 약 1~2m의 낙엽 관목. 4~5월에 노란색 겹꽃 또는 홑꽃이 핌. 가지는 녹색.
+생육 특성: 반그늘~양지에서 잘 자람. 번식력 강하고 관리 쉬움.
+서식지 특성: 산지, 정원, 공원 등
+생태적 역할: 봄철 꿀벌의 밀원식물, 조경 및 생물다양성 유지에 기여
+학명: Kerria japonica`
+      },
+      {
+        name: "털부처꽃",
+        lat: 36.807914,
+        lng: 127.060511,
+        photo: "pimage/털부처꽃.jpg",
+        description: `생물 분류
+종명: Lythrum salicaria
+분류: 부처꽃과(Lythraceae), 부처꽃속(Lythrum)
+
+식물 특징
+외형적 특징: 다년생 초본. 키 50~120cm, 줄기에 잔털 있음. 연한 자주색 꽃이 긴 수상꽃차례로 핌.
+생육 특성: 습지에서 잘 자라며, 군락을 형성함.
+서식지 특성: 논두렁, 연못 가장자리, 하천변
+생태적 역할: 습지 식생 구성원. 벌과 나비의 밀원식물
+학명: Lythrum salicaria`
+      },
+      {
+        name: "큰금계국",
+        lat: 36.809242,
+        lng: 127.060402,
+        photo: "pimage/큰금계국.jpg",
+        description: `생물 분류
+종명: Coreopsis lanceolata
+분류: 국화과(Asteraceae), 금계국속(Coreopsis)
+
+식물 특징
+외형적 특징: 다년생 초본. 키 30~60cm, 노란색 꽃이 5~6월에 핌. 꽃잎 끝이 톱니모양으로 갈라짐.
+생육 특성: 척박한 땅에서도 잘 자람. 번식력 매우 강함.
+서식지 특성: 도로변, 초지, 빈터 등
+생태적 역할: 생태계 교란 가능성 있는 외래종(유의 필요), 벌과 곤충의 밀원
+학명: Coreopsis lanceolata`
+      },
+      {
+        name: "칡꽃",
+        lat: 36.807566,
+        lng: 127.061002,
+        photo: "pimage/칡꽃.jpg",
+        description: `생물 분류
+종명: Pueraria lobata
+분류: 콩과(Fabaceae), 칡속(Pueraria)
+
+식물 특징
+외형적 특징: 덩굴성 다년생 식물. 여름에 자주색~보라색 꽃이 수상꽃차례로 핌. 잎은 3출복엽.
+생육 특성: 햇볕이 좋은 곳에서 폭발적으로 성장, 다른 식물을 덮음.
+서식지 특성: 산기슭, 도로변, 유휴지 등
+생태적 역할: 질소 고정, 토양 비옥화. 그러나 생태계 교란 우려 있는 강한 번식력
+학명: Pueraria lobata`
+      },
+      {
+        name: "강아지풀",
+        lat: 36.809035,
+        lng: 127.061291,
+        photo: "pimage/강아지풀.jpg",
+        description: `생물 분류
+종명: Setaria viridis
+분류: 벼과(Poaceae), 강아지풀속(Setaria)
+
+식물 특징
+외형적 특징: 30~80cm 높이의 일년생 풀. 연한 녹색의 길쭉한 꽃차례가 강아지 꼬리처럼 부드러움.
+생육 특성: 건조한 땅에서도 잘 자라며, 척박지 적응력 뛰어남.
+서식지 특성: 길가, 들판, 공터 등
+생태적 역할: 새들의 먹이원, 토양 피복 역할
+학명: Setaria viridis`
+      },
+      {
+        name: "개망초",
+        lat: 36.809117,
+        lng: 127.061224,
+        photo: "pimage/개망초.jpg",
+        description: `생물 분류
+종명: Erigeron annuus
+분류: 국화과(Asteraceae), 개망초속(Erigeron)
+
+식물 특징
+외형적 특징: 키 약 50~100cm. 흰색 꽃잎과 노란 중심부가 있는 국화 형태의 꽃. 잎에는 거친 털이 있음.
+생육 특성: 일년생 또는 월년생. 씨앗으로 번식하며 개체 수 많음.
+서식지 특성: 빈터, 들판, 도로변
+생태적 역할: 초기 식생 복원종, 벌과 나비의 밀원식물
+학명: Erigeron annuus`
+      },
+      {
+        name: "금매화",
+        lat: 36.808746,
+        lng: 127.061315,
+        photo: "pimage/금매화.jpg",
+        description: `생물 분류
+종명: Trollius ledebourii
+분류: 미나리아재비과(Ranunculaceae), 금매화속(Trollius)
+
+식물 특징
+외형적 특징: 다년생 초본. 밝은 황색의 반구형 꽃이 핌. 줄기는 직립하며 잎은 손바닥처럼 갈라짐.
+생육 특성: 냉량한 기후를 선호하며 고산지대에서 자람.
+서식지 특성: 고산지 습지, 계곡 가장자리 등
+생태적 역할: 고산지대 생물 다양성 유지에 기여, 벌 유인
+학명: Trollius ledebourii`
+      },
+      {
+        name: "난초",
+        lat: 36.808569,
+        lng: 127.059981,
+        photo: "pimage/난초.jpg",
+        description: `생물 분류
+종명(예시): Cephalanthera falcata (금난초)
+분류: 난초과(Orchidaceae), 금난초속(Cephalanthera)
+
+식물 특징
+외형적 특징: 20~50cm 높이의 초본. 노란색 꽃이 줄기 하나에 여러 개 피며, 잎은 창 모양.
+생육 특성: 반그늘 습기 있는 토양을 좋아함. 번식은 씨앗과 근경(덩이줄기)으로.
+서식지 특성: 산지 숲속, 반그늘
+생태적 역할: 특수한 수분 매개자와 공생. 일부는 희귀종으로 보호 대상
+학명: Cephalanthera falcata`
+      },
+      {
+        name: "메리골드",
+        lat: 36.806237,
+        lng: 127.060416,
+        photo: "pimage/메리골드.jpg",
+        description: `생물 분류
+종명: Tagetes erecta
+분류: 국화과(Asteraceae), 메리골드속(Tagetes)
+
+식물 특징
+외형적 특징: 원형 또는 겹겹이 핀 노란주황색 꽃. 키 약 30~100cm. 잎에서는 특유의 향기가 남.
+생육 특성: 일년생. 햇빛을 좋아하고 내건성이 강함.
+서식지 특성: 화단, 조경지, 텃밭 등
+생태적 역할: 해충 기피 효과(천연 방충식물), 벌 유인, 토양 내 선충 억제
+학명: Tagetes erecta`
+      },
+      {
+        name: "미국자리공",
+        lat: 36.807296,
+        lng: 127.059384,
+        photo: "pimage/미국자리공.jpg",
+        description: `생물 분류
+종명: Phytolacca americana
+분류: 자리공과(Phytolaccaceae), 자리공속(Phytolacca)
+
+식물 특징
+외형적 특징: 키 1~2m의 다년생 초본. 여름에 연한 분홍빛 꽃, 가을에는 진한 보라색 열매가 송이째 달림. 줄기와 열매는 붉은빛.
+생육 특성: 강한 번식력과 생장력. 독성이 있음.
+서식지 특성: 빈터, 하천 주변, 도심 주변 등
+생태적 역할: 새들이 열매를 섭취하며 종자 확산, 일부 지역에서 생태계 교란종으로 분류됨
+학명: Phytolacca americana`
+      },
+      {
+        name: "소나무",
+        lat: 36.809243,
+        lng: 127.061315,
+        photo: "pimage/소나무.jpg",
+        description: `생물 분류
+종명: Pinus densiflora
+분류: 소나무과(Pinaceae), 소나무속(Pinus)
+
+식물 특징
+외형적 특징: 키 15~30m의 상록 침엽수. 잎은 침 모양이고 두 가닥씩 짝을 지음. 붉은빛 수피가 특징.
+생육 특성: 양지에서 잘 자라며, 척박한 토양에도 강함.
+서식지 특성: 산지, 야산, 사방지 등
+생태적 역할: 산림 생태계의 주요 구성 수종, 야생동물 서식처, 탄소 흡수
+학명: Pinus densiflora`
+      },
+      {
+        name: "쑥",
+        lat: 36.809238,
+        lng: 127.060998,
+        photo: "pimage/쑥.jpg",
+        description: `생물 분류
+종명: Artemisia princeps
+분류: 국화과(Asteraceae), 쑥속(Artemisia)
+
+식물 특징
+외형적 특징: 잎은 깃 모양으로 갈라지고 은회색 털이 있음. 특유의 강한 향이 나며 키는 30~100cm.
+생육 특성: 다년생. 햇볕 잘 드는 곳에서 강하게 자람.
+서식지 특성: 길가, 들판, 밭 가장자리
+생태적 역할: 토종 식생, 곤충의 먹이 및 번식처 제공. 민간 약용식물
+학명: Artemisia princeps`
+      },
+      {
+        name: "엄나무/산딸나무",
+        lat: 36.807635,
+        lng: 127.061397,
+        photo: "pimage/엄나무_산딸나무.jpg",
+        description: `생물 분류
+종명: Kalopanax septemlobus
+분류: 두릅나무과(Araliaceae), 엄나무속(Kalopanax)
+
+식물 특징
+외형적 특징: 큰 나무(10~20m). 잎은 손바닥처럼 5~7갈래로 갈라지고 가시가 많음. 봄에 흰 꽃이 핌.
+생육 특성: 활엽 낙엽교목. 햇볕이 많은 곳에서 빠르게 성장.
+서식지 특성: 산지, 숲 가장자리
+생태적 역할: 꿀벌의 밀원, 새·곤충의 서식지 제공. 어린순은 식용
+학명: Kalopanax septemlobus`
+      },
+      {
+        name: "오동나무",
+        lat: 36.807088,
+        lng: 127.060618,
+        photo: "pimage/오동나무.jpg",
+        description: `생물 분류
+종명: Paulownia coreana
+분류: 현삼과(Scrophulariaceae) 또는 오동나무과(Paulowniaceae), 오동나무속(Paulownia)
+
+식물 특징
+외형적 특징: 낙엽 활엽교목. 잎은 매우 크고 심장형. 봄에 연보라색 나팔꽃 모양의 꽃이 핌.
+생육 특성: 빠르게 성장하며 양지에서 잘 자람.
+서식지 특성: 마을 근처, 조경지, 숲가
+생태적 역할: 새들의 쉼터 제공, 목재 자원, 꿀벌 밀원식물
+학명: Paulownia coreana`
+      },
+      {
+        name: "원추리",
+        lat: 36.809232,
+        lng: 127.060992,
+        photo: "pimage/원추리.jpg",
+        description: `생물 분류
+종명: Hemerocallis fulva
+분류: 백합과(Liliaceae), 원추리속(Hemerocallis)
+
+식물 특징
+외형적 특징: 키 약 40~100cm, 여름에 주황색~갈색의 깔때기 모양 꽃이 핌. 잎은 가늘고 길며 뿌리에서 뭉쳐 자람.
+생육 특성: 번식력이 강하고 반그늘~양지에서 잘 자람.
+서식지 특성: 초지, 습지 가장자리, 산책로 주변
+생태적 역할: 벌과 나비 유인, 뿌리로 사면 안정화 역할, 식용 가능
+학명: Hemerocallis fulva`
+      },
+      {
+        name: "이끼",
+        lat: 36.806647,
+        lng: 127.060656,
+        photo: "pimage/이끼.jpg",
+        description: `생물 분류
+종명(예시): Hypnum plumaeforme
+분류: 이끼과(Hypnaceae), 히프눔이끼속(Hypnum)
+
+식물 특징
+외형적 특징: 크기가 작고 엽상체로 구성. 잎이 작고 겹겹이 붙으며 부드럽고 축축한 질감. 녹색 또는 갈색빛.
+생육 특성: 광합성을 하지만 뿌리가 없어 수분을 외부에서 흡수함.
+서식지 특성: 바위, 나무껍질, 습기 많은 땅
+생태적 역할: 수분 유지, 토양 침식 방지, 미소서식지 제공
+학명: Hypnum plumaeforme`
+      },
+      {
+        name: "철쭉",
+        lat: 36.805433,
+        lng: 127.060179,
+        photo: "pimage/철쭉.jpg",
+        description: `생물 분류
+종명: Rhododendron mucronulatum
+분류: 진달래과(Ericaceae), 진달래속(Rhododendron)
+
+식물 특징
+외형적 특징: 키 약 1~2m. 봄철 연보라색~자주색 꽃이 먼저 피고, 잎은 그 뒤에 남. 잎은 타원형.
+생육 특성: 내한성이 강하며 건조한 토양에도 적응.
+서식지 특성: 산지, 능선, 학교·공원 조경지
+생태적 역할: 꿀벌, 나비 유인. 봄철 생태계 개화 지표
+학명: Rhododendron mucronulatum`
+  }
     ];
 
-    // 마커 저장 배열
     let animalMarkers = [];
     let plantMarkers = [];
 
-    // 동물 마커 생성
     animals.forEach(a => {
+      const popupContent = `
+        <b>${a.name}</b><br>
+        <img src="${a.photo}" alt="${a.name}" style="width:200px; height:auto;"><br>
+        ${a.description.replace(/\n/g, '<br>')}
+      `;
+
       const marker = L.marker([a.lat, a.lng], { icon: orangeIcon })
-        .bindPopup(`<b>${a.name}</b><br><!-- 여기에 설명 --><br><!-- <img src='이미지경로' width='100'> -->`);
+        .bindPopup(popupContent);
       marker.addTo(map);
       animalMarkers.push(marker);
     });
 
-    // 식물 마커 생성
     plants.forEach(p => {
+      const popupContent = `
+        <b>${p.name}</b><br>
+        <img src="${p.photo}" alt="${p.name}" style="width:200px; height:auto;"><br>
+        ${p.description.replace(/\n/g, '<br>')}
+      `;
+
       const marker = L.marker([p.lat, p.lng], { icon: greenIcon })
-        .bindPopup(`<b>${p.name}</b><br><!-- 여기에 설명 --><br><!-- <img src='이미지경로' width='100'> -->`);
+        .bindPopup(popupContent);
       marker.addTo(map);
       plantMarkers.push(marker);
     });
 
-    // 체크박스 이벤트 연결
     document.getElementById('toggleAnimals').addEventListener('change', function () {
       animalMarkers.forEach(marker => {
         if (this.checked) {
